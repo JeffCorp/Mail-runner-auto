@@ -5,13 +5,13 @@ exports.send_mail = (req, res, next) => {
     const {config, from, siteName, toDomain, toUser, title, message} = req.body;
     const {host, port, secure, appUsername, appPassword} = config;
 
-    if(!config) throw new Error("Input the configuration object as - config: {host, port, secure, appUsername, appPassword}");
-    if(!from) throw new Error("Input from whom the mail should read");
-    if(!siteName) throw new Error("Input the site Name");
-    if(!toDomain) throw new Error("Input an email from the Domain Name e.g. email@yourdomain.com");
-    if(!toUser) throw new Error("Input the user's email");
-    if(!title) throw new Error("Input the title of the mail");
-    if(!message) throw new Error("Input the message")
+    if(!config) throw Error("Input the configuration object as - config: {host, port, secure, appUsername, appPassword}");
+    if(!from) throw Error("Input from whom the mail should read");
+    if(!siteName) throw Error("Input the site Name");
+    if(!toDomain) throw Error("Input an email from the Domain Name e.g. email@yourdomain.com");
+    if(!toUser) throw Error("Input the user's email");
+    if(!title) throw Error("Input the title of the mail");
+    if(!message) throw Error("Input the message")
 
     mail(req)
       .then(() =>
@@ -59,8 +59,8 @@ async function mail(req) {
 
   // send mail with defined transport object
   let info = await transporter.sendMail({
-    from: `${req.body.from || `${req.body.siteName} <${req.body.from}>`}`,
-    to: `${req.body.toDomain}, ${req.body.toUser}`,
+    from: `${req.body.siteName} <${req.body.from}>`,
+    to: `${req.body.toUser}`,
     subject: req.body.title,
     html: req.body.message,
   });
