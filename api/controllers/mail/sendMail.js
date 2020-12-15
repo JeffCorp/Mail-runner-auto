@@ -32,7 +32,7 @@ async function mail(req) {
         `${req.body.siteName} <${req.body.from}>`}`,
       to: `${req.body.toDomain}, ${req.body.toUser}`,
       subject: req.body.title,
-      html: req.body.message,
+      html: req.body.message
     });
   
     
