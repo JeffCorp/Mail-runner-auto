@@ -2,16 +2,23 @@ const nodemailer = require("nodemailer");
 
 exports.send_mail = (req, res, next) => {
   try {
-    const {config, from, siteName, toDomain, toUser, title, message} = req.body;
-    const {host, port, secure, appUsername, appPassword} = config;
+    const {config, from, siteName, toUser, title, message} = req.body;
+    const {host, port, appUsername, appPassword} = config;
 
     if(!config) throw Error("Input the configuration object as - config: {host, port, secure, appUsername, appPassword}");
     if(!from) throw Error("Input from whom the mail should read");
     if(!siteName) throw Error("Input the site Name");
-    if(!toDomain) throw Error("Input an email from the Domain Name e.g. email@yourdomain.com");
     if(!toUser) throw Error("Input the user's email");
     if(!title) throw Error("Input the title of the mail");
     if(!message) throw Error("Input the message")
+
+    // Configuration
+    if (!appUsername) throw Error("Input an application Username")
+    if (!appPassword) throw Error("Input an application Password")
+    if (!host) throw Error("Input an host")
+    if (!port) throw Error("Input an application port")
+
+
 
     mail(req)
       .then(() =>
